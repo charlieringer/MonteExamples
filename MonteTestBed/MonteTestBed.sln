@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{84992E94-FCA3-94E8-66E7-1DBFE0E3FB3D}") = "MonteTestBed", "Assembly-CSharp.csproj", "{DD5CC245-5643-2F10-C11E-8CB9AE82F049}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD5CC245-5643-2F10-C11E-8CB9AE82F049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD5CC245-5643-2F10-C11E-8CB9AE82F049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD5CC245-5643-2F10-C11E-8CB9AE82F049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD5CC245-5643-2F10-C11E-8CB9AE82F049}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

@@ -6,7 +6,7 @@ using Monte;
 
 abstract public class GameMaster : MonoBehaviour {
 	//Stores all the variables needed for the Game that are shared between the two.
-	protected BasicMCTS brain = new BasicMCTS();
+	protected BasicMCTS brain;
 	protected bool gamePlaying = true;
 	protected int playerIndx;
 

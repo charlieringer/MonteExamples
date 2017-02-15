@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Threading;
+using Monte;
 
 //Game master object for Go specifically
 public class Go : GameMaster {
@@ -17,6 +18,13 @@ public class Go : GameMaster {
 	void Start () {
 		//Sets up the game
 		//By seting values based on what side you have selected
+		try {
+			brain = new BasicMCTS();
+		} catch (System.Xml.XmlException e)
+		{
+			Debug.Log ("XML Couldn't be parsed");
+			brain = new BasicMCTS (5.0, 1.4, 36);
+		}
 		if (GameData.playerIndex == 1) {
 			turn.text = "Your turn";
 			colour.text = "Selected colour: White";

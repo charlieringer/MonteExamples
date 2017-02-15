@@ -5,6 +5,7 @@
 -r:'/Volumes/Transcend/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll'
 -r:'/Volumes/Transcend/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll'
 -r:'/Volumes/Transcend/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll'
+-r:'Assets/Monte/Monte.dll'
 -r:'/Volumes/Transcend/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll'
 -define:UNITY_5_3_3
 -define:UNITY_5_3
@@ -77,8 +78,6 @@
 -define:UNITY_EDITOR_64
 -define:UNITY_EDITOR_OSX
 -define:UNITY_TEAM_LICENSE
-'Assets/Scripts/AI.cs'
-'Assets/Scripts/AIState.cs'
 'Assets/Scripts/GameData.cs'
 'Assets/Scripts/GameMaster.cs'
 'Assets/Scripts/Go.cs'

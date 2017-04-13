@@ -89,19 +89,21 @@ public class OCAIState : AIState
 	            countY = 0; //It is impossible to win so set count to 0
 
 	        //Check diagonal directions
-	        int diag1Loc = location % 7 + i + i * boardWidth;
-	        bool hasWraparoundD1 = diag1Loc % boardWidth < locModBoard && location < diag1Loc;
-	        if (diag1Loc == colourPlayed && !hasWraparoundD1) countD1++;
+			int diag1Start = location % 7;
+			int diag1Loc = diag1Start + i*7;
+			if (diag1Loc < 36 && stateRep[diag1Loc] == colourPlayed  && ((location % 7 == 0)||(location % 7 == 1)|(location % 7 == 6))) countD1++;
 	        else if (countD1 >= 1 && countD1 < 5) countD1 = 0;
 
-	        int diag2Loc = location % 5 - i + i * boardWidth;
-	        bool hasWraparoundD2 = diag2Loc % boardWidth > locModBoard && location < diag2Loc;
-	        if (diag2Loc == colourPlayed &&  !hasWraparoundD2) countD2++;
+			int diag2Start = (location % 5 < 4) ? location % 5+5 : location % 5;
+			int diag2Loc = diag2Start + i*5;
+			if (diag2Loc < 36 && stateRep[diag2Loc] == colourPlayed && ((location % 5 == 0)||(location % 5 == 4)|(location % 5 == 6))) countD2++;
 	        else if (countD2 >= 1 && countD2 < 5) countD2 = 0;
 
 	    }
 	    //if either direction is at least 5 the game is over (Order wins)
-	    if (countX >= 5 || countY >= 5 || countD1 >= 5 || countD2 >= 5) return 0;
+		if (countX >= 5 || countY >= 5 || countD1 >= 5 || countD2 >= 5) {
+			return 0;
+		}
 	    //Otherwise game is still going on.
 	    return -1;
 	}

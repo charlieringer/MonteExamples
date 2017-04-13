@@ -77,24 +77,7 @@ public abstract class Game : MonoBehaviour {
 		}
 	}
 
-	public void handlePlayerAt(int x, int y)
-	{
-		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 0;
-		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-		AIState playerState = new TTTAIState(playerIndx, null, 0, latestStateRep);
-		int result = playerState.getWinner ();
-		if (result >= 0) {
-			if (result == 2) {
-				Debug.Log ("Draw");
-			} else if (result == playerIndx) {
-				Debug.Log ("Win");
-			} else {
-				Debug.Log ("Loss");
-			}
-			gamePlaying = false;
-		}
-	}
-
+	public abstract void handlePlayerAt (int x, int y);
 	public abstract int checkAI();
     public abstract int checkSimulation();
     public abstract void reset();

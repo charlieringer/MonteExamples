@@ -38,6 +38,8 @@ public class Tile : MonoBehaviour {
 		if (canPress) {
 			//Set the colour to green
 			rend.material.color = Color.green;
+			counter0.SetActive (false);
+			counter1.SetActive (false);
 			//And set the counter to active
 			if (master.getPlayerColour() == 0) counter0.SetActive (true);
 			else counter1.SetActive (true);

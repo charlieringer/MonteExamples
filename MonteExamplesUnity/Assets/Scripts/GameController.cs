@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour {
 			break;
 		case 2:
 			currentGame = gameObject.AddComponent<OrderAndChaos> ();
-			currentGame.currentAI = new MCTSSimpleAgent ();
+			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 36, 0.5);
 			currentGame.boardWidth = 6;
 			break;
 		case 3:

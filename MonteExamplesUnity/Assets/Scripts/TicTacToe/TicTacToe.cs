@@ -74,9 +74,12 @@ public class TicTacToe : Game
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				//create the game object 
-				GameObject tile = (GameObject)Instantiate(preFabTile, new Vector3 ((i+(0.1f*i)), j+(0.1f*j), 0), Quaternion.identity);
+				float x = i+(0.1f*i);
+				float y = j+(0.1f*j);
+				GameObject tile = (GameObject)Instantiate(preFabTile, new Vector3 (x, y, 0), Quaternion.identity);
 				tile.GetComponent<Tile>().setMaster(this);
-				tile.GetComponent<Tile> ().setXY (i, j);
+				tile.GetComponent<Tile > ().setXY (i, j);
+				tile.GetComponent<Tile> ().setRealXY (x, y);
 				board.Add(tile);
 				tile.GetComponent<Tile>().preFabCounter0 = preFabCounter0;
 				tile.GetComponent<Tile>().preFabCounter1 = preFabCounter1;
@@ -87,5 +90,24 @@ public class TicTacToe : Game
 	public override int getPlayerColour()
 	{
 		return playerIndx;
+	}
+
+	public override void handlePlayerAt(int x, int y)
+	{
+		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 0;
+		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
+		numbMovesPlayed++;
+		latestAIState = new TTTAIState(playerIndx, null, 0, latestStateRep);
+		int result = latestAIState.getWinner ();
+		if (result >= 0) {
+			if (result == 2) {
+				Debug.Log ("Draw");
+			} else if (result == playerIndx) {
+				Debug.Log ("Win");
+			} else {
+				Debug.Log ("Loss");
+			}
+			gamePlaying = false;
+		}
 	}
 }

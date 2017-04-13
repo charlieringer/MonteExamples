@@ -25,6 +25,7 @@ public class Hex : Game
 			else
 			{
 				latestAIState = nextAIState;
+				latestStateRep = nextAIState.stateRep;
 				currentAI.reset();
 				currentPlayersTurn = (currentPlayersTurn + 1) % 2;
 				updateBoard ();
@@ -32,7 +33,6 @@ public class Hex : Game
 			numbMovesPlayed++;
 		}
 		if (numbMovesPlayed == 81) return 2;
-
 		return latestAIState.getWinner();
 	}
 
@@ -92,5 +92,23 @@ public class Hex : Game
 	public override int getPlayerColour()
 	{
 		return playerIndx;
+	}
+
+	public override void handlePlayerAt(int x, int y)
+	{
+		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 0;
+		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
+		latestAIState = new HexAIState(playerIndx, null, 0, latestStateRep, numbMovesPlayed);
+		int result = latestAIState.getWinner ();
+		if (result >= 0) {
+			if (result == 2) {
+				Debug.Log ("Draw");
+			} else if (result == playerIndx) {
+				Debug.Log ("Win");
+			} else {
+				Debug.Log ("Loss");
+			}
+			gamePlaying = false;
+		}
 	}
 }

@@ -49,7 +49,7 @@ public class Tile : MonoBehaviour {
 	void OnMouseDown()
 	{
 		//If it is the players turn and they can click this space
-		if (master.currentPlayersTurn == master.playerIndx && canPress) {
+		if (master.currentPlayersTurn == master.playerIndx && canPress && master.gamePlaying) {
 			//Turn of the highlight counter (as a real counter will be spawned
 			if (master.getPlayerColour() == 0) counter0.SetActive (true);
 			else counter1.SetActive (true);

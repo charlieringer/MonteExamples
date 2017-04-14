@@ -66,6 +66,7 @@ public class Hex : Game
         latestAIState = new HexAIState();
         numbMovesPlayed = 0;
         currentPlayersTurn = 0;
+		currentAI = ais[currentPlayersTurn];
     }
 
 	public override void initBoard()
@@ -76,8 +77,8 @@ public class Hex : Game
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				//create the game object 
-				float x = (i+(0.1f*i))-((float)j/2);
-				float y = j + (0.1f * j);
+				float x = (i+(0.1f*i))+((float)j/2);
+				float y = -(j + (0.1f * j));
 				GameObject tile = (GameObject)Instantiate(preFabTile, new Vector3 (x, y, 0), Quaternion.identity);
 				tile.GetComponent<Tile>().setMaster(this);
 				tile.GetComponent<Tile> ().setXY (i, j);
@@ -96,9 +97,10 @@ public class Hex : Game
 
 	public override void handlePlayerAt(int x, int y)
 	{
-		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 0;
+		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 1;
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
 		latestAIState = new HexAIState(playerIndx, null, 0, latestStateRep, numbMovesPlayed);
+		numbMovesPlayed++;
 		int result = latestAIState.getWinner ();
 		if (result >= 0) {
 			if (result == 2) {

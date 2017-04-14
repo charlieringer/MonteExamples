@@ -8,7 +8,7 @@ public abstract class Game : MonoBehaviour {
 	public AIAgent currentAI;
 	//For simulations
     protected AIAgent[] ais;
-	protected bool gamePlaying = true;
+	public bool gamePlaying = true;
 	public int currentPlayersTurn;
     protected int numbMovesPlayed = 0;
     protected AIState latestAIState = null;
@@ -24,7 +24,6 @@ public abstract class Game : MonoBehaviour {
 	{
 		gamePlaying = true;
 		currentPlayersTurn = 0;
-		playerIndx = 0;
 	}
 		
 

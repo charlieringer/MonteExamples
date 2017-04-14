@@ -105,7 +105,7 @@ public class OrderAndChaos : Game
 
 	public override void handlePlayerAt(int x, int y)
 	{
-		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 1;
+		latestStateRep[x*boardWidth+y] = pieceSelected == 0 ? 2 : 1;
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
 		int[] lastMovePlayed = { x * boardWidth + y, pieceSelected == 0 ? 2 : 1 };
 		numbMovesPlayed++;

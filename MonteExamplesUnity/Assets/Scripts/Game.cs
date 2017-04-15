@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Game : MonoBehaviour {
 	//Stores all the variables needed for the Game that are shared between the two.
@@ -18,6 +19,9 @@ public abstract class Game : MonoBehaviour {
 	public GameObject preFabTile;
 	public GameObject preFabCounter0;
 	public GameObject preFabCounter1;
+	public GameObject AIThinking;
+	public GameObject EndGame;
+	public Text winlose;
 	public int boardWidth;
 		
 	void Start()
@@ -29,20 +33,22 @@ public abstract class Game : MonoBehaviour {
 
 	public void runGame()
 	{
+		playerIndx = GameData.playerIndex;
 		if (!(currentPlayersTurn == playerIndx) && gamePlaying) {
+			AIThinking.SetActive(true);
 			int result = checkAI ();
 			if (result >= 0) {
 				if (result == 2) {
-					Debug.Log ("Draw");
+					winlose.text = "You drew!";
 				} else if (result == playerIndx) {
-					Debug.Log ("Win");
+					winlose.text = "You won!";
 				} else {
-					Debug.Log ("Loss");
+					winlose.text = "You lost!";
 				}
-
+				EndGame.SetActive (true);
 				gamePlaying = false;
 			}
-		}
+		} else AIThinking.SetActive(false);
 	}
 
     public void runGameSimulations(int numbGames, AIAgent _ai1, AIAgent _ai2)

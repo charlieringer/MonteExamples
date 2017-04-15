@@ -18,6 +18,10 @@ public class TTTAIState : AIState
     public override List<AIState> generateChildren()
     {
         List<AIState> children = new List<AIState> ();
+		if (getWinner () >= 0) {
+			this.children = children;
+			return children;
+		}
         int newPIndx = (playerIndex == 0) ? 1 : 0;
 
         for (int i = 0; i < 9; i++) {

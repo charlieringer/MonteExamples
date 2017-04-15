@@ -29,6 +29,10 @@ public class OCAIState : AIState
 	{
 		//Generates all possible child states from this state
 		List<AIState> children = new List<AIState> ();
+		if (getWinner () >= 0) {
+			this.children = children;
+			return children;
+		}
 		//Swap the player
 	    int newPIndx = (playerIndex + 1) % 2;
 		//Increment the number of peices played

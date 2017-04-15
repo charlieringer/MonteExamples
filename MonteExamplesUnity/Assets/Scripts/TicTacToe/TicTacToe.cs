@@ -33,7 +33,7 @@ public class TicTacToe : Game
 			numbMovesPlayed++;
 		}
 		if (numbMovesPlayed == 9) return 2;
-		return latestAIState.getWinner();
+		return latestAIState == null ? -1 :(latestAIState.getWinner());
 	}
 
     // Play is called once per tick
@@ -94,20 +94,21 @@ public class TicTacToe : Game
 
 	public override void handlePlayerAt(int x, int y)
 	{
-		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 0;
+		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 1;
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
 		numbMovesPlayed++;
 		latestAIState = new TTTAIState(playerIndx, null, 0, latestStateRep);
 		int result = latestAIState.getWinner ();
 		if (result >= 0) {
 			if (result == 2) {
-				Debug.Log ("Draw");
+				winlose.text = "You drew!";
 			} else if (result == playerIndx) {
-				Debug.Log ("Win");
+				winlose.text = "You won!";
 			} else {
-				Debug.Log ("Loss");
+				winlose.text = "You lost!";
 			}
 			gamePlaying = false;
+			EndGame.SetActive (true);
 		}
 	}
 }

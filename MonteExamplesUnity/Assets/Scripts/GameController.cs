@@ -11,7 +11,11 @@ public class GameController : MonoBehaviour {
 	public GameObject preFabTile;
 	public GameObject preFabCounterWhite;
 	public GameObject preFabCounterBlack;
+	public GameObject AIThinking;
+	public GameObject EndGame;
+	public Text winlose;
 	public int gameindx;
+
 
 	void Start()
 	{
@@ -19,17 +23,17 @@ public class GameController : MonoBehaviour {
 		{
 		case 1:
 			currentGame = gameObject.AddComponent<TicTacToe> ();
-			currentGame.currentAI = new MCTSSimpleAgent (100, 1.4, 9, 0.5);
+			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 9, 0.5);
 			currentGame.boardWidth = 3;
 			break;
 		case 2:
 			currentGame = gameObject.AddComponent<OrderAndChaos> ();
-			currentGame.currentAI = new MCTSSimpleAgent (20000, 1.4, 36, 0.5);
+			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 36, 0.5);
 			currentGame.boardWidth = 6;
 			break;
 		case 3:
 			currentGame = gameObject.AddComponent<Hex> ();
-			currentGame.currentAI = new MCTSSimpleAgent (500, 1.4, 36, 0.5);
+			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 36, 0.5);
 			currentGame.boardWidth = 9;
 			break;
 		}
@@ -37,6 +41,9 @@ public class GameController : MonoBehaviour {
 		currentGame.preFabTile = preFabTile;
 		currentGame.preFabCounter0 = preFabCounterWhite;
 		currentGame.preFabCounter1 = preFabCounterBlack;
+		currentGame.AIThinking = AIThinking;
+		currentGame.EndGame = EndGame;
+		currentGame.winlose = winlose;
 		currentGame.initBoard ();
 	}
 

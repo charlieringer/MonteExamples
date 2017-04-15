@@ -104,13 +104,14 @@ public class Hex : Game
 		int result = latestAIState.getWinner ();
 		if (result >= 0) {
 			if (result == 2) {
-				Debug.Log ("Draw");
+				winlose.text = "You drew!";
 			} else if (result == playerIndx) {
-				Debug.Log ("Win");
+				winlose.text = "You won!";
 			} else {
-				Debug.Log ("Loss");
+				winlose.text = "You lost!";
 			}
 			gamePlaying = false;
+			EndGame.SetActive (true);
 		}
 	}
 }

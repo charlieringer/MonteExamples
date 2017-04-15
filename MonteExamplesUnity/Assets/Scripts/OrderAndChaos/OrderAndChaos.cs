@@ -92,8 +92,6 @@ public class OrderAndChaos : Game
 				tile.GetComponent<Tile > ().setXY (i, j);
 				tile.GetComponent<Tile> ().setRealXY (x, y);
 				board.Add(tile);
-				tile.GetComponent<Tile>().preFabCounter0 = preFabCounter0;
-				tile.GetComponent<Tile>().preFabCounter1 = preFabCounter1;
 			}
 		} 
 	}

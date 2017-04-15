@@ -14,41 +14,62 @@ public class GameController : MonoBehaviour {
 	public GameObject AIThinking;
 	public GameObject EndGame;
 	public Text winlose;
-	public int gameindx;
+	public int gameIndx;
 
 
 	void Start()
 	{
-		switch (gameindx) 
+		AIAgent agent = new MCTSSimpleAgent (1000, 1.4, 9, 0.5);
+		Model model = new Model(GameData.modelFiles [gameIndx]);
+		string settings = GameData.settingsFiles [gameIndx];
+		switch (GameData.selectedAgent) 
 		{
+		case 0:
+			agent = new RandomAgent ();
+			break;
 		case 1:
-			currentGame = gameObject.AddComponent<TicTacToe> ();
-			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 9, 0.5);
-			currentGame.boardWidth = 3;
+			agent = new ModelBasedAgent (model);
 			break;
 		case 2:
-			currentGame = gameObject.AddComponent<OrderAndChaos> ();
-			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 36, 0.5);
-			currentGame.boardWidth = 6;
+			agent = new MCTSSimpleAgent (settings);
 			break;
 		case 3:
+			agent = new MCTSWithPruning (model, settings);
+			break;
+		case 4:
+			agent = new MCTSWithSoftPruning (model, settings);
+			break;
+		case 5:
+			agent = new MCTSWithLearning (model, settings);
+			break;
+		}
+
+		switch (gameIndx) 
+		{
+		case 0:
+			currentGame = gameObject.AddComponent<TicTacToe> ();
+			currentGame.currentAI = agent;
+			currentGame.boardWidth = 3;
+			break;
+		case 1:
+			currentGame = gameObject.AddComponent<OrderAndChaos> ();
+			currentGame.currentAI = agent;
+			currentGame.boardWidth = 6;
+			break;
+		case 2:
 			currentGame = gameObject.AddComponent<Hex> ();
-			currentGame.currentAI = new MCTSSimpleAgent (1000, 1.4, 36, 0.5);
+			currentGame.currentAI = agent;
 			currentGame.boardWidth = 9;
 			break;
 		}
 		currentGame.playerIndx = playerIndx;
 		currentGame.preFabTile = preFabTile;
-		currentGame.preFabCounter0 = preFabCounterWhite;
-		currentGame.preFabCounter1 = preFabCounterBlack;
 		currentGame.AIThinking = AIThinking;
 		currentGame.EndGame = EndGame;
 		currentGame.winlose = winlose;
-		currentGame.initBoard ();
 	}
 
-	void Update()
-	{
+	void Update() {
 		currentGame.runGame ();
 	}
 }

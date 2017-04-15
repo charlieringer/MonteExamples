@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class TicTacToe : Game
 {
-    public void Start()
+	public TicTacToe()
     {
         latestAIState = new TTTAIState();
     }
@@ -81,8 +81,6 @@ public class TicTacToe : Game
 				tile.GetComponent<Tile > ().setXY (i, j);
 				tile.GetComponent<Tile> ().setRealXY (x, y);
 				board.Add(tile);
-				tile.GetComponent<Tile>().preFabCounter0 = preFabCounter0;
-				tile.GetComponent<Tile>().preFabCounter1 = preFabCounter1;
 			}
 		}
 	}

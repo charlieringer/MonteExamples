@@ -13,8 +13,8 @@ public class Tile : MonoBehaviour {
 	public int y;
 	public GameObject preFabCounter0;
 	public GameObject preFabCounter1;
-	public GameObject counter0;
-	public GameObject counter1;
+	private GameObject counter0;
+	private GameObject counter1;
 
 	public Texture tileTexture;
 
@@ -22,12 +22,7 @@ public class Tile : MonoBehaviour {
 	void Start () {
 		rend.material.mainTexture =  tileTexture;
 		counter0 = (GameObject)Instantiate(preFabCounter0, new Vector3 (realX, realY,0 ), Quaternion.Euler(new Vector3(90, 0, 0)));
-		counter0.SetActive (false);
-		counter0.GetComponent<Collider> ().enabled = false;
-
 		counter1 = (GameObject)Instantiate(preFabCounter1, new Vector3 (realX, realY,0 ), Quaternion.Euler(new Vector3(90, 0, 0)));
-		counter1.SetActive (false);
-		counter1.GetComponent<Collider> ().enabled = false;
 	}
 
 	//When you mouse over 
@@ -38,11 +33,11 @@ public class Tile : MonoBehaviour {
 		if (canPress) {
 			//Set the colour to green
 			rend.material.color = Color.green;
-			counter0.SetActive (false);
-			counter1.SetActive (false);
+			if(counter0 != null)counter0.SetActive (false);
+			if(counter1 != null)counter1.SetActive (false);
 			//And set the counter to active
-			if (master.getPlayerColour() == 0) counter0.SetActive (true);
-			else counter1.SetActive (true);
+			if (master.getPlayerColour() == 0 && counter0 != null) counter0.SetActive (true);
+			else if (counter1 != null) counter1.SetActive (true);
 		}
 	}
 

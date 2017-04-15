@@ -10,15 +10,13 @@ public abstract class Game : MonoBehaviour {
 	//For simulations
     protected AIAgent[] ais;
 	public bool gamePlaying = true;
-	public int currentPlayersTurn;
+	public int currentPlayersTurn = 0;
     protected int numbMovesPlayed = 0;
     protected AIState latestAIState = null;
 	public int playerIndx;
 	protected int[] latestStateRep;
 	protected List<GameObject> board;
 	public GameObject preFabTile;
-	public GameObject preFabCounter0;
-	public GameObject preFabCounter1;
 	public GameObject AIThinking;
 	public GameObject EndGame;
 	public Text winlose;
@@ -26,8 +24,7 @@ public abstract class Game : MonoBehaviour {
 		
 	void Start()
 	{
-		gamePlaying = true;
-		currentPlayersTurn = 0;
+		initBoard ();
 	}
 		
 

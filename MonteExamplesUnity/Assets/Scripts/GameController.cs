@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
 
 	void Start()
 	{
+		UnitySystemConsoleRedirector.Redirect();
 		AIAgent agent = new MCTSSimpleAgent (1000, 1.4, 9, 0.5);
 		Model model = new Model(GameData.modelFiles [gameIndx]);
 		string settings = GameData.settingsFiles [gameIndx];

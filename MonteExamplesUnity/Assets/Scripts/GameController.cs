@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
 	void Start()
 	{
 		UnitySystemConsoleRedirector.Redirect();
-		AIAgent agent = new MCTSSimpleAgent (1000, 1.4, 9, 0.5);
+		AIAgent agent;
 		Model model = new Model(GameData.modelFiles [gameIndx]);
 		string settings = GameData.settingsFiles [gameIndx];
 		switch (GameData.selectedAgent) 
@@ -42,6 +42,9 @@ public class GameController : MonoBehaviour {
 			break;
 		case 5:
 			agent = new MCTSWithLearning (model, settings);
+			break;
+		default:
+			agent = new MCTSSimpleAgent (settings);
 			break;
 		}
 
@@ -71,6 +74,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update() {
-		currentGame.runGame ();
+		if(currentGame!=null)currentGame.runGame ();
 	}
 }

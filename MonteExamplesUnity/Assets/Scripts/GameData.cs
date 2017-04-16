@@ -5,8 +5,8 @@ public class GameData : MonoBehaviour {
 	static public int selectedAgent = 2;
 
 
-	static public string[] modelFiles = new string[3];
-	static public string[] settingsFiles = {"Monte/DefaultSettings.xml","Monte/DefaultSettings.xml","Monte/DefaultSettings.xml"};
+	static public string[] modelFiles = {"","",""};
+	static public string[] settingsFiles = {"Assets/Monte/DefaultSettings.xml","Assets/Monte/DefaultSettings.xml","Assets/Monte/DefaultSettings.xml"};
 
 	//This just stores the player index so it can be passed from the front end to the game
 	public void setPlayerIndex(int indx)

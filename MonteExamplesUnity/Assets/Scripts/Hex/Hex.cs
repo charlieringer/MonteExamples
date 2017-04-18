@@ -76,7 +76,7 @@ public class Hex : Game
 	public override void handlePlayerAt(int x, int y)
 	{
 		//Get the staterep location and updating it with the correct value
-		latestStateRep[x*6+y] = playerIndx == 0 ? 2 : 1;
+		latestStateRep[x*9+y] = playerIndx == 0 ? 2 : 1;
 		//Change the players turn
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
 		//Set up the last state

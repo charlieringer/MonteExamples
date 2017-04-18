@@ -43,7 +43,7 @@ public class OrderAndChaos : Game
 			OCAIState nextAIState = (OCAIState)ai.next;
 			//Unpack the state 
 			latestAIState = nextAIState;
-			latestStateRep = nextAIState.stateRep;
+			latestStateRep = nextAIState == null ? null : nextAIState.stateRep;
 			//Reset the AI
 			ai.reset();
 			//Switch which player is playing

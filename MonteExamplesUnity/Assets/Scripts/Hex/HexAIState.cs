@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Monte;
 
 public class HexAIState : AIState
 {
+    //The number of moves played
     public int numbPiecesPlayed;
+    //How wide the board is.
     private const int width = 9;
-    
+
+    //Makes a new state
     public HexAIState()
     {
         stateRep = new int[width*width];
@@ -16,6 +18,7 @@ public class HexAIState : AIState
         numbPieceTypes = 2;
     }
 
+    //Makes a state as a child of another one.
     public HexAIState(int pIndex, AIState _parent, int _depth, int[] _stateRep,
         int _numbPiecesPlayed) : base(pIndex, _parent, _depth,
         _stateRep, 2)
@@ -23,10 +26,12 @@ public class HexAIState : AIState
         numbPiecesPlayed = _numbPiecesPlayed;
     }
 
+    //Generates all children (results of all moves) from this state.
     public override List<AIState> generateChildren()
     {
-        //Generates all possible child states from this state
+        //List of children
         List<AIState> children = new List<AIState> ();
+        //If the game is already over there are no children
         if (getWinner () >= 0) {
             this.children = children;
             return children;
@@ -56,8 +61,6 @@ public class HexAIState : AIState
 
     public override int getWinner()
     {
-        //TODO:Debug this
-        if (numbPiecesPlayed == width*width) return 2;
         //iterate over the top of the board checking for player 1 victory
         for (int i = 0; i < width; i++)
         {
@@ -184,8 +187,6 @@ public class HexAIState : AIState
                         {
                             potentialNodes.Add(latestNode+(width-1)); //dlNeighbour
                         }
-
-
                         //Down right is always there is not on the last row so just check match
                         if (stateRep[latestNode + width] == stateRep[latestNode])
                         {
@@ -195,6 +196,8 @@ public class HexAIState : AIState
                 }
             }
         }
+        //If all of the board is full and there is no win it is a draw
+        if (numbPiecesPlayed == width*width) return 2;
         return -1;
     }
 }

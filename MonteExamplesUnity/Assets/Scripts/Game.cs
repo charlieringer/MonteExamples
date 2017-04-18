@@ -65,6 +65,8 @@ public abstract class Game : MonoBehaviour {
 	//For catching what move the AI has made.
 	public void updateBoard()
 	{
+		//Safety check
+		if (latestStateRep == null) return;
 		//Loop through the game state
 		for (int i = 0; i < latestStateRep.Length; i++) 
 		{

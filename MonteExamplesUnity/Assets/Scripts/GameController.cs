@@ -5,24 +5,27 @@ using System.Threading;
 using Monte;
 
 public class GameController : MonoBehaviour {
-	
+	//The current game
 	protected Game currentGame;
-	public int playerIndx;
+	//Prefab Graphical game objects
 	public GameObject preFabTile;
-	public GameObject preFabCounterWhite;
-	public GameObject preFabCounterBlack;
 	public GameObject AIThinking;
 	public GameObject EndGame;
 	public Text winlose;
+	//Which game is being played
 	public int gameIndx;
-
 
 	void Start()
 	{
+		//Redirect the console output (for debugging purposes).
 		UnitySystemConsoleRedirector.Redirect();
+		//Make a new agent
 		AIAgent agent;
+		//And model
 		Model model = new Model(GameData.modelFiles [gameIndx]);
+		//Set the settings
 		string settings = GameData.settingsFiles [gameIndx];
+		//And init the right agent with the model and settings above.
 		switch (GameData.selectedAgent) 
 		{
 		case 0:
@@ -47,33 +50,28 @@ public class GameController : MonoBehaviour {
 			agent = new MCTSSimpleAgent (settings);
 			break;
 		}
-
+		//Init the correct game
 		switch (gameIndx) 
 		{
 		case 0:
 			currentGame = gameObject.AddComponent<TicTacToe> ();
-			currentGame.currentAI = agent;
-			currentGame.boardWidth = 3;
 			break;
 		case 1:
 			currentGame = gameObject.AddComponent<OrderAndChaos> ();
-			currentGame.currentAI = agent;
-			currentGame.boardWidth = 6;
 			break;
 		case 2:
 			currentGame = gameObject.AddComponent<Hex> ();
-			currentGame.currentAI = agent;
-			currentGame.boardWidth = 9;
 			break;
 		}
-		currentGame.playerIndx = playerIndx;
+		//Once the game has been made set the rest of the game up
+		currentGame.ai = agent;
+		currentGame.playerIndx = GameData.playerIndex;;
 		currentGame.preFabTile = preFabTile;
 		currentGame.AIThinking = AIThinking;
 		currentGame.EndGame = EndGame;
 		currentGame.winlose = winlose;
 	}
 
-	void Update() {
-		if(currentGame!=null)currentGame.runGame ();
-	}
+	//On update run the game
+	void Update() { if(currentGame!=null) currentGame.runGame (); }
 }

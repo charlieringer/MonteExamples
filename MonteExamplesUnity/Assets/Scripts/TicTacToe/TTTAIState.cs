@@ -5,23 +5,28 @@ public class TTTAIState : AIState
 {
     public TTTAIState()
     {
-        stateRep = new int[10];
-        stateRep[9] = 2;
+        stateRep = new int[9];
         playerIndex = 0;
         parent = null;
         depth = 0;
+        numbPieceTypes = 2;
     }
 
     public TTTAIState(int pIndex, AIState _parent, int _depth, int[] _stateRep) : base(pIndex, _parent, _depth,
-        _stateRep){}
+        _stateRep, 2)
+    {
+        numbPieceTypes = 2;
+    }
 
     public override List<AIState> generateChildren()
     {
         List<AIState> children = new List<AIState> ();
-		if (getWinner () >= 0) {
-			this.children = children;
-			return children;
-		}
+
+        if (getWinner () >= 0) {
+            this.children = children;
+            return children;
+        }
+
         int newPIndx = (playerIndex == 0) ? 1 : 0;
 
         for (int i = 0; i < 9; i++) {

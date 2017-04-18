@@ -3,88 +3,70 @@ using Monte;
 using UnityEngine;
 using System.Collections.Generic;
 
+//Class for the Hex game which derives from the Game base class
 public class OrderAndChaos : Game
 {
+	//Need to know the last move for Order and Chaos
     private int[] lastMovePlayed;
+	//Also the piece selected changes
 	private int pieceSelected = 0;
 
     public OrderAndChaos()
     {
+		//Make a blank state
         latestAIState = new OCAIState();
     }
 
+	//Handle key input
 	public void Update()
 	{
+		//If space is pressed
 		if (Input.GetKeyDown ("space")) {
+			//Change the piece selected
 			pieceSelected = (pieceSelected + 1) % 2;
 		}
 	}
 		
-	// Play is called once per tick
+	//Called each time the update loop checks the AI progress
 	public override int checkAI () {
-		//If the game is running and it is time for the AI to play
-		if (!currentAI.started)
+		//If the AI has not stated
+		if (!ai.started)
 		{
+			//Start it with the current state.
 			AIState currentState = new OCAIState((currentPlayersTurn+1)%2, null, 0, latestStateRep, lastMovePlayed, numbMovesPlayed);
-			currentAI.run(currentState);
+			ai.run(currentState);
 		}
-		else if (currentAI.done)
+		//Otherwise if the AI is done 
+		else if (ai.done)
 		{
-			OCAIState nextAIState = (OCAIState)currentAI.next;
-			if (nextAIState == null) reset();
-			else
-			{
-				latestAIState = nextAIState;
-				latestStateRep = nextAIState.stateRep;
-				currentAI.reset();
-				currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-				updateBoard ();
-			}
+			//Get the next state (after the AI has moved)
+			OCAIState nextAIState = (OCAIState)ai.next;
+			//Unpack the state 
+			latestAIState = nextAIState;
+			latestStateRep = nextAIState.stateRep;
+			//Reset the AI
+			ai.reset();
+			//Switch which player is playing
+			currentPlayersTurn = (currentPlayersTurn + 1) % 2;
+			//Update the graphical rep of the board
+			updateBoard ();
+			//And increment the number of moves
 			numbMovesPlayed++;
 		}
-		if (numbMovesPlayed == 36) return 2;
+		//Return who the winner is
 		return latestAIState.getWinner();
 	}
 
-	// Update is called once per frame
-	public override int checkSimulation () {
-	    //If the game is running and it is time for the AI to play
-	    if (!currentAI.started)
-	    {
-	        AIState currentState = new OCAIState((currentPlayersTurn+1)%2, null, 0, latestAIState.stateRep, lastMovePlayed, numbMovesPlayed);
-	        //AIState currentState = new OCAIState(currentPlayersTurn, null, 0, latestAIState.stateRep, lastMovePlayed, numbMovesPlayed);
-	        currentAI.run(currentState);
-	    }
-	    else if (currentAI.done)
-	    {
-	        OCAIState nextAIState = (OCAIState)currentAI.next;
-	        if (nextAIState == null) return 2;
-            latestAIState = nextAIState;
-            currentAI.reset();
-            currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-            currentAI = ais[currentPlayersTurn];
-            lastMovePlayed = nextAIState.lastPiecePlayed;
-            numbMovesPlayed++;
-	    }
-	    return latestAIState.getWinner();
-	}
-
-    public override void reset()
-    {
-        latestAIState = new OCAIState();
-        numbMovesPlayed = 0;
-        currentPlayersTurn = 0;
-        currentAI = ais[currentPlayersTurn];
-    }
-
+	//Instantiates the tiles for the graphical rep of the board
 	public override void initBoard()
 	{
+		//Make an empty state rep
 		latestStateRep = new int[36];
 		//Creates the new tiles
 		board = new List<GameObject>();
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
-				//create the game object 
+				//create a tile here.
 				float x = i+(0.1f*i);
 				float y = j+(0.1f*j);
 				GameObject tile = (GameObject)Instantiate(preFabTile, new Vector3 (x, y, 0), Quaternion.identity);
@@ -96,19 +78,28 @@ public class OrderAndChaos : Game
 		} 
 	}
 
+	//Get which colour the player is playing
 	public override int getPlayerColour()
 	{
-		return pieceSelected;
+		return pieceSelected;//because Order and Chaos has peices changing colour get pieceSelected.
 	}
 
+	//Handles the player clicking a tile.
 	public override void handlePlayerAt(int x, int y)
 	{
-		latestStateRep[x*boardWidth+y] = pieceSelected == 0 ? 2 : 1;
+		//Get the staterep location and updating it with the correct value
+		latestStateRep[x*6+y] = pieceSelected == 0 ? 2 : 1;
+		//Change the players turn
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-		int[] lastMovePlayed = { x * boardWidth + y, pieceSelected == 0 ? 2 : 1 };
-		numbMovesPlayed++;
+		//Make a move array for the lastest move
+		lastMovePlayed = new int[]{ x * 6 + y, pieceSelected == 0 ? 2 : 1 };
+		//Set up the last state
 		latestAIState = new OCAIState(playerIndx, null, 0, latestStateRep, lastMovePlayed, numbMovesPlayed);
+		//Update the number of moves
+		numbMovesPlayed++;
+		//Find out the result of the board
 		int result = latestAIState.getWinner ();
+		//And the end game as such
 		if (result >= 0) {
 			if (result == 2) {
 				winlose.text = "You drew!";

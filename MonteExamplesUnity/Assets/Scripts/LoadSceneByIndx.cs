@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Script to load the correct game on the front end.
 public class LoadSceneByIndx : MonoBehaviour {
 
 	public void loadSceneIndex(int indx)

@@ -3,80 +3,58 @@ using Monte;
 using UnityEngine;
 using System.Collections.Generic;
 
+//Class for the Hex game which derives from the Game base class
 public class Hex : Game
 {
     public Hex()
     {
+		//Make a blank state
         latestAIState = new HexAIState();
     }
 
-	// Play is called once per tick
+	//Called each time the update loop checks the AI progress
 	public override int checkAI () {
-		//If the game is running and it is time for the AI to play
-		if (!currentAI.started)
+		//If the AI has not stated
+		if (!ai.started)
 		{
+			//Start it with the current state.
 			AIState currentState = new HexAIState((currentPlayersTurn+1)%2, null, 0, latestStateRep, numbMovesPlayed);
-			currentAI.run(currentState);
+			ai.run(currentState);
 		}
-		else if (currentAI.done)
+		//Otherwise if the AI is done 
+		else if (ai.done)
 		{
-			HexAIState nextAIState = (HexAIState)currentAI.next;
-			if (nextAIState == null) reset();
-			else
-			{
-				latestAIState = nextAIState;
-				latestStateRep = nextAIState.stateRep;
-				currentAI.reset();
-				currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-				updateBoard ();
-			}
+			//Get the next state (after the AI has moved)
+			HexAIState nextAIState = (HexAIState)ai.next;
+			//Unpack the state 
+			latestAIState = nextAIState;
+			latestStateRep = nextAIState.stateRep;
+			//Reset the AI
+			ai.reset();
+			//Switch which player is playing
+			currentPlayersTurn = (currentPlayersTurn + 1) % 2;
+			//Update the graphical rep of the board
+			updateBoard ();
+			//And increment the number of moves
 			numbMovesPlayed++;
 		}
-		if (numbMovesPlayed == 81) return 2;
+		//Return who the winner is
 		return latestAIState.getWinner();
 	}
 
-    // Play is called once per tick
-    public override int checkSimulation () {
-        //If the game is running and it is time for the AI to play
-        if (!currentAI.started)
-        {
-            AIState currentState = new HexAIState((currentPlayersTurn+1)%2, null, 0, latestAIState.stateRep, numbMovesPlayed);
-            currentAI.run(currentState);
-        }
-        else if (currentAI.done)
-        {
-            HexAIState nextAIState = (HexAIState)currentAI.next;
-            if (nextAIState == null)reset();
-            else
-            {
-                latestAIState = nextAIState;
-                currentAI.reset();
-                currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-                currentAI = ais[currentPlayersTurn];
-            }
-            numbMovesPlayed++;
-        }
-        if (numbMovesPlayed == 81) return 2;
-		return latestAIState.getWinner();
-    }
-
-    public override void reset()
-    {
-        latestAIState = new HexAIState();
-        numbMovesPlayed = 0;
-        currentPlayersTurn = 0;
-		currentAI = ais[currentPlayersTurn];
-    }
-
+	//Instantiates the tiles for the graphical rep of the board
 	public override void initBoard()
 	{
+		//Make an empty state rep
 		latestStateRep = new int[81];
 		//Creates the new tiles
 		board = new List<GameObject>();
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				//create the game object 
+		for (int i = 0; i < 9; i++) 
+		{
+			for (int j = 0; j < 9; j++) 
+			{
+				//create a tile here. There is a realX and realY (real world location) and X Y (board position) 
+				//due to the offset needed for Hex
 				float x = (i+(0.1f*i))+((float)j/2);
 				float y = -(j + (0.1f * j));
 				GameObject tile = (GameObject)Instantiate(preFabTile, new Vector3 (x, y, 0), Quaternion.identity);
@@ -88,18 +66,26 @@ public class Hex : Game
 		} 
 	}
 
+	//Get which colour the player is playing
 	public override int getPlayerColour()
 	{
-		return playerIndx;
+		return playerIndx; //Which in this case is just the player index
 	}
 
+	//Handles the player clicking a tile.
 	public override void handlePlayerAt(int x, int y)
 	{
-		latestStateRep[x*boardWidth+y] = playerIndx == 0 ? 2 : 1;
+		//Get the staterep location and updating it with the correct value
+		latestStateRep[x*6+y] = playerIndx == 0 ? 2 : 1;
+		//Change the players turn
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
+		//Set up the last state
 		latestAIState = new HexAIState(playerIndx, null, 0, latestStateRep, numbMovesPlayed);
+		//Update the number of moves
 		numbMovesPlayed++;
+		//Find out the result of the board
 		int result = latestAIState.getWinner ();
+		//And the end game as such
 		if (result >= 0) {
 			if (result == 2) {
 				winlose.text = "You drew!";

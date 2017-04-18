@@ -21,6 +21,7 @@ public class Tile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rend.material.mainTexture =  tileTexture;
+		//init the counters
 		counter0 = (GameObject)Instantiate(preFabCounter0, new Vector3 (realX, realY,0 ), Quaternion.Euler(new Vector3(90, 0, 0)));
 		counter1 = (GameObject)Instantiate(preFabCounter1, new Vector3 (realX, realY,0 ), Quaternion.Euler(new Vector3(90, 0, 0)));
 	}
@@ -45,11 +46,11 @@ public class Tile : MonoBehaviour {
 	{
 		//If it is the players turn and they can click this space
 		if (master.currentPlayersTurn == master.playerIndx && canPress && master.gamePlaying) {
-			//Turn of the highlight counter (as a real counter will be spawned
+			//Turn the coutner on for good
 			if (master.getPlayerColour() == 0) counter0.SetActive (true);
 			else counter1.SetActive (true);
 			canPress = false;
-			//And spawn the real counter ... 
+			//And update the board
 			master.handlePlayerAt (x, y);
 		}
 	}
@@ -73,13 +74,14 @@ public class Tile : MonoBehaviour {
 
 	public void setRealXY(float _rX, float _rY)
 	{
+		//Sets the real world XY location of the tile
 		realX = _rX;
 		realY = _rY;
 	}
 
 	public void setXY(int _x, int _y)
 	{
-		//Sets the XY values of the tile
+		//Sets the XY board values of the tile
 		x = _x;
 		y = _y;
 	}

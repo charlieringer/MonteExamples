@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* The following file is not my work and should not be marked as such.
+It is taken under an open source MIT licence and simply allows 
+System.Console.Write commands to be routed through the Unity's
+Debug.Log and therefore allows for Monte Console output to be 
+visible in this project. It has no functionality besides this */
+
+
+using System;
 using System.IO;
 using System.Text;
 

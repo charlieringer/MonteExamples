@@ -10,6 +10,7 @@ public class TicTacToe : Game
     {
 		//Make a blank state
         latestAIState = new TTTAIState();
+		currentPlayersTurn = 0;
     }
 
 	//Called each time the update loop checks the AI progress
@@ -78,10 +79,10 @@ public class TicTacToe : Game
 		latestStateRep[x*3+y] = playerIndx == 0 ? 2 : 1;
 		//Change the players turn
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-		//Set up the last state
-		latestAIState = new TTTAIState(playerIndx, null, 0, latestStateRep);
 		//Update the number of moves
 		numbMovesPlayed++;
+		//Set up the last state
+		latestAIState = new TTTAIState(playerIndx, null, 0, latestStateRep);
 		//Find out the result of the board
 		int result = latestAIState.getWinner ();
 		//And the end game as such

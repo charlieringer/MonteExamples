@@ -15,6 +15,7 @@ public class OrderAndChaos : Game
     {
 		//Make a blank state
         latestAIState = new OCAIState();
+		currentPlayersTurn = 0;
     }
 
 	//Handle key input
@@ -93,10 +94,10 @@ public class OrderAndChaos : Game
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
 		//Make a move array for the lastest move
 		lastMovePlayed = new int[]{ x * 6 + y, pieceSelected == 0 ? 2 : 1 };
-		//Set up the last state
-		latestAIState = new OCAIState(playerIndx, null, 0, latestStateRep, lastMovePlayed, numbMovesPlayed);
 		//Update the number of moves
 		numbMovesPlayed++;
+		//Set up the last state
+		latestAIState = new OCAIState(playerIndx, null, 0, latestStateRep, lastMovePlayed, numbMovesPlayed);
 		//Find out the result of the board
 		int result = latestAIState.getWinner ();
 		//And the end game as such

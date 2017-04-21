@@ -60,7 +60,7 @@ public class OCAIState : AIState
                 //Then simululate playing a black piece
                 int[] newStateRep2 = (int[])stateRep.Clone ();
                 newStateRep2 [i] = 2;
-                int[] move2 = {i, 1};
+                int[] move2 = {i, 2};
                 OCAIState childAIState2 = new OCAIState (newPIndx, this, depth+1, newStateRep2, move2, newNumbPieces);
                 //And add this state as a child
                 children.Add (childAIState2);
@@ -116,7 +116,7 @@ public class OCAIState : AIState
 			if(diag2Start == 4 || diag2Start == 5 || diag2Start == 11)
 			{
 				int diag2Loc = diag2Start + i * 5;
-				if (diag2Loc < 36 && stateRep[diag2Loc] == colourPlayed && (diag2Loc-(diag2Loc%6) != location-locModBoard || diag2Loc == location)) countD2++;
+				if (diag2Loc < 36 && stateRep[diag2Loc] == colourPlayed && diag2Loc!=29) countD2++;
 				else if (countD2 >= 1 && countD2 < 5) countD2 = 0;
 			}
         }

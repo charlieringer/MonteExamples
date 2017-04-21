@@ -26,43 +26,19 @@ public class GameController : MonoBehaviour {
 		//Set the settings
 		string settings = GameData.settingsFiles [gameIndx];
 		//And init the right agent with the model and settings above.
-		switch (GameData.selectedAgent) 
-		{
-		case 0:
-			agent = new RandomAgent ();
-			break;
-		case 1:
-			agent = new ModelBasedAgent (model);
-			break;
-		case 2:
-			agent = new MCTSSimpleAgent (settings);
-			break;
-		case 3:
-			agent = new MCTSWithPruning (model, settings);
-			break;
-		case 4:
-			agent = new MCTSWithSoftPruning (model, settings);
-			break;
-		case 5:
-			agent = new MCTSWithLearning (model, settings);
-			break;
-		default:
-			agent = new MCTSSimpleAgent (settings);
-			break;
-		}
+		if	   (GameData.selectedAgent == 0) agent = new RandomAgent ();
+		else if(GameData.selectedAgent == 1) agent = new ModelBasedAgent (model);
+		else if(GameData.selectedAgent == 2) agent = new MCTSSimpleAgent (settings);
+		else if(GameData.selectedAgent == 3) agent = new MCTSWithPruning (model, settings);
+		else if(GameData.selectedAgent == 4) agent = new MCTSWithSoftPruning (model, settings);
+		else if(GameData.selectedAgent == 5) agent = new MCTSWithLearning (model, settings);
+		else agent = new MCTSSimpleAgent (settings);
+
 		//Init the correct game
-		switch (gameIndx) 
-		{
-		case 0:
-			currentGame = gameObject.AddComponent<TicTacToe> ();
-			break;
-		case 1:
-			currentGame = gameObject.AddComponent<OrderAndChaos> ();
-			break;
-		case 2:
-			currentGame = gameObject.AddComponent<Hex> ();
-			break;
-		}
+		if(gameIndx == 0) currentGame = gameObject.AddComponent<TicTacToe> ();
+		else if (gameIndx == 1) currentGame = gameObject.AddComponent<OrderAndChaos> ();
+		else if (gameIndx == 2) currentGame = gameObject.AddComponent<Hex> ();
+
 		//Once the game has been made set the rest of the game up
 		currentGame.ai = agent;
 		currentGame.playerIndx = GameData.playerIndex;;

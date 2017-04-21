@@ -10,6 +10,7 @@ public class Hex : Game
     {
 		//Make a blank state
         latestAIState = new HexAIState();
+		currentPlayersTurn = 0;
     }
 
 	//Called each time the update loop checks the AI progress
@@ -79,10 +80,10 @@ public class Hex : Game
 		latestStateRep[x*9+y] = playerIndx == 0 ? 2 : 1;
 		//Change the players turn
 		currentPlayersTurn = (currentPlayersTurn + 1) % 2;
-		//Set up the last state
-		latestAIState = new HexAIState(playerIndx, null, 0, latestStateRep, numbMovesPlayed);
 		//Update the number of moves
 		numbMovesPlayed++;
+		//Set up the last state
+		latestAIState = new HexAIState(playerIndx, null, 0, latestStateRep, numbMovesPlayed);
 		//Find out the result of the board
 		int result = latestAIState.getWinner ();
 		//And the end game as such

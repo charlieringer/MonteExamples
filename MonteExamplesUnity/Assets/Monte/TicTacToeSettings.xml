@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Settings>
 	<MCTSSettings 
-		NumberOfSimulations="1000" 
+		NumberOfSimulations="500" 
 		ExploreWeight="1.45" 
 		MaxRollout="9" 
-		DrawScore="0.5">
+		DrawScore="0.75">
 	</MCTSSettings>
 
 	<PruningSettings 
-		PruneWorsePercent="0"
-		StopAt="7"
+		PruneWorsePercent="0.15"
+		StopAt="8"
 		SoftPruneWeight="0.25">	
 	</PruningSettings>
 

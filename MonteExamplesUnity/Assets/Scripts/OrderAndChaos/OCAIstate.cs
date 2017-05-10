@@ -34,7 +34,7 @@ public class OCAIState : AIState
 	public override List<AIState> generateChildren()
 	{
 	    //List of children
-		List<AIState> children = new List<AIState> ();
+		children = new List<AIState> ();
 	    //If the game is already over there are no children
 	    if (getWinner () >= 0) {
 	        this.children = children;
@@ -66,9 +66,7 @@ public class OCAIState : AIState
                 children.Add (childAIState2);
             }
         }
-		//Set the children of this node
-		this.children = children;
-		//Also return it.
+		//return it.
 		return children;
 	}
 

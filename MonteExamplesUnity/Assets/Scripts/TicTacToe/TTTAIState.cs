@@ -24,10 +24,9 @@ public class TTTAIState : AIState
     public override List<AIState> generateChildren()
     {
         //List of children
-        List<AIState> children = new List<AIState> ();
+        children = new List<AIState> ();
         //If the game is already over there are no children
         if (getWinner () >= 0) {
-            this.children = children;
             return children;
         }
         //Swap the player
@@ -47,9 +46,7 @@ public class TTTAIState : AIState
                 children.Add (childAIState);
             }
         }
-        //Set the children of this node
-        this.children = children;
-        //Also return it.
+        //return it.
         return children;
     }
 
@@ -59,9 +56,11 @@ public class TTTAIState : AIState
         if (stateRep[0] == stateRep[3] && stateRep[3] == stateRep[6] && stateRep[0] != 0) return playerIndex;
         if (stateRep[1] == stateRep[4] && stateRep[4] == stateRep[7] && stateRep[1] != 0) return playerIndex;
         if (stateRep[2] == stateRep[5] && stateRep[5] == stateRep[8] && stateRep[2] != 0) return playerIndex;
+
         if (stateRep[0] == stateRep[1] && stateRep[1] == stateRep[2] && stateRep[0] != 0) return playerIndex;
         if (stateRep[3] == stateRep[4] && stateRep[4] == stateRep[5] && stateRep[3] != 0) return playerIndex;
         if (stateRep[6] == stateRep[7] && stateRep[7] == stateRep[8] && stateRep[6] != 0) return playerIndex;
+
         if (stateRep[0] == stateRep[4] && stateRep[4] == stateRep[8] && stateRep[0] != 0) return playerIndex;
         if (stateRep[2] == stateRep[4] && stateRep[4] == stateRep[6] && stateRep[2] != 0) return playerIndex;
 

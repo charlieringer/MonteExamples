@@ -30,7 +30,7 @@ public class HexAIState : AIState
     public override List<AIState> generateChildren()
     {
         //List of children
-        List<AIState> children = new List<AIState> ();
+        children = new List<AIState> ();
         //If the game is already over there are no children
         if (getWinner () >= 0) {
             this.children = children;
@@ -53,9 +53,7 @@ public class HexAIState : AIState
                 children.Add (childAIState);
             }
         }
-        //Set the children of this node
-        this.children = children;
-        //Also return it.
+        //return it.
         return children;
     }
 
